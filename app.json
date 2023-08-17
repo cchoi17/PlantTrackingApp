@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "Plant-Tracker",
+    "slug": "Plant-Tracker",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "ios": {
+      "infoPlist": {
+        "NSCameraUsageDescription": "We need access to your camera to scan QR codes for plant details."
+      }
+    }
+  }
+}
