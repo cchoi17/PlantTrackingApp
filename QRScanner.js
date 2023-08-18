@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Button } from 'react-native';
 import { Camera } from 'expo-camera';
 
 function QRScanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
 
+  const requestCameraPermission = async () => {
+    const { status } = await Camera.requestPermissionsAsync();
+    setHasPermission(status === 'granted');
+  };
+
   useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
+    requestCameraPermission();
   }, []);
 
   const handleScan = ({ type, data }) => {
@@ -17,10 +19,15 @@ function QRScanner({ navigation }) {
   };
 
   if (hasPermission === null) {
-    return <View />;
+    return <Text>Requesting camera permission...</Text>;
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>No access to camera</Text>
+        <Button title="Retry Permission" onPress={requestCameraPermission} />
+      </View>
+    );
   }
 
   return (

@@ -9,33 +9,33 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(setUser);
-    return unsubscribe; //
+    return unsubscribe;
   }, []);
 
   const handleSignUp = async (email, password) => {
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
-      console.log('User registered successfully!');
+      alert('User registered successfully!');
     } catch (error) {
-      console.log(error.message);
+      alert(`Error registering: ${error.message}`);
     }
   }
 
   const handleSignIn = async (email, password) => {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
-      console.log('User logged in successfully!');
+      alert('User logged in successfully!');
     } catch (error) {
-      console.log(error.message);
+      alert(`Error logging in: ${error.message}`);
     }
   }
 
   const handleSignOut = async () => {
     try {
       await firebase.auth().signOut();
-      console.log('User logged out successfully!');
+      alert('User logged out successfully!');
     } catch (error) {
-      console.log(error.message);
+      alert(`Error logging out: ${error.message}`);
     }
   }
 

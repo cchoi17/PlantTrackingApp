@@ -2,27 +2,32 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth';
 
 function PlantDataInput({ navigation, route }) {
-  const { qrData } = route.params; //QR data passed throuhg nav
+  const { qrData } = route.params; //QR data passed through nav
   const [plantName, setPlantName] = useState(''); 
   const db = firebase.firestore();
-  const userID = firebase.auth().currentUser.uid;  // fetch id of current logged user
+  const userID = firebase.auth().currentUser ? firebase.auth().currentUser.uid : null;  // fetch id of current logged user
 
   const handleSave = () => {
-    // add plant for user?
+    if (!userID) {
+      alert("User not authenticated.");
+      return;
+    }
+
     db.collection("users").doc(userID).collection("plants").add({
       plantName: plantName,
       qrData: qrData,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      //can add imageURL upload?
+      // TODO: imageURL upload?
     })
     .then(() => {
       alert("Data saved successfully!");
-      navigation.goBack(); // can also nav to another screen ig
+      navigation.goBack(); // can also navigate to another screen
     })
     .catch(error => {
-      alert("Error saving data: ", error.message);
+      alert(`Error saving data: ${error.message}`);
     });
   };
 
@@ -34,7 +39,6 @@ function PlantDataInput({ navigation, route }) {
         value={plantName}
         onChangeText={text => setPlantName(text)}
       />
-      {/* can display the QR Data or have another TextInput to edit it */}
       <Button title="Save Plant Data" onPress={handleSave} />
     </View>
   );

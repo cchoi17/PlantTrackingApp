@@ -1,27 +1,25 @@
 import React from 'react';
-import { View, StyleSheet } from "react-native";
-import { initializeApp } from '@react-native-firebase/app';
+import { View, Text, StyleSheet } from "react-native";
 import firebaseConfig from './firebaseConfig';
 import Navigator from './Navigation';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import { AuthProvider } from './AuthContext'; 
 
-//init firebase
-initializeApp(firebaseConfig);
+// Initialize Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 
 export default function App() {
-  return (
-    <AuthProvider>  {}
-      <View style={styles.container}>
-        <Navigator />
-      </View>
-    </AuthProvider>
-  );
+    return (
+        <View style={styles.container}>
+            <Navigator />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
+    container: {
+        flex: 1
+    }
 });
