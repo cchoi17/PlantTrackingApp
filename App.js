@@ -1,25 +1,17 @@
-import React from 'react';
-import { View, Text, StyleSheet } from "react-native";
-import firebaseConfig from './firebaseConfig';
-import Navigator from './Navigation';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// Initialize Firebase
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
+import PlantDataForm from './PlantDataForm';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-    return (
-        <View style={styles.container}>
-            <Navigator />
-        </View>
-    );
-}
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    }
-});
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="PlantDataForm" component={PlantDataForm} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
