@@ -31,6 +31,8 @@ const LoginScreen = ({ navigation }) => {
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
+                onSubmitEditing = {handleLogin}
+                returnKeyType = 'done'
             />
             <Button title="Login" onPress={handleLogin} />
         </View>
@@ -41,7 +43,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        backgroundColor: '#5dc762'
     },
     title: {
         fontSize: 24,

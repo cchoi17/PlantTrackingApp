@@ -31,6 +31,8 @@ const SignUpScreen = ({ navigation }) => {
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
+                onSubmitEditing = {handleSignUp}
+                returnKeyType = 'done'
             />
             <Button title="Sign Up" onPress={handleSignUp} />
         </View>
@@ -41,7 +43,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        backgroundColor: '#5dc762'
     },
     title: {
         fontSize: 24,
