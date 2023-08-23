@@ -1,6 +1,6 @@
 import { View, Text, Button, StyleSheet, TextInput, Switch } from 'react-native'
 import React, { useEffect, useState} from 'react'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { FIRESTORE_DB } from './firebaseConfig'
 import { useRoute } from '@react-navigation/native';
 
@@ -23,6 +23,7 @@ const PlantDataForm = ({navigation}) => {
         dead: isDead, 
         description: 'Example test description',
         email: route.params.email.toLowerCase(),
+        timestamp: serverTimestamp(),
       });
       console.log('Added plant with ID: ', docRef.id);
       setPlant('');
