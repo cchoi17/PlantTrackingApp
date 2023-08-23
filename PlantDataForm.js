@@ -1,15 +1,20 @@
 import { View, Text, Button, StyleSheet, TextInput, Switch } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState} from 'react'
 import { addDoc, collection } from 'firebase/firestore'
 import { FIRESTORE_DB } from './firebaseConfig'
+import { useRoute } from '@react-navigation/native';
 
 const PlantDataForm = ({navigation}) => {
   const [plants, setPlants] = useState([])
   const [plant, setPlant] = useState('')
   const [isDead, setIsDead] = useState(false);
 
+  const route = useRoute();
+
   useEffect(() => {
-  }, [])
+    // Access the email parameter from the route params
+    const { email } = route.params || {};
+  }, [route]);
 
   const addPlant = async () => {
     try {
@@ -17,6 +22,7 @@ const PlantDataForm = ({navigation}) => {
         plantID: plant,
         dead: isDead, 
         description: 'Example test description',
+        email: route.params.email.toLowerCase(),
       });
       console.log('Added plant with ID: ', docRef.id);
       setPlant('');

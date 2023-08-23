@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FIREBASE_AUTH } from './firebaseConfig';
+import PlantDataForm from './PlantDataForm';
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -10,7 +11,7 @@ const LoginScreen = ({ navigation }) => {
     const handleLogin = async () => {
         try {
             await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
-            navigation.navigate('PlantDataForm');
+            navigation.navigate('PlantDataForm', { email });
         } catch (error) {
             Alert.alert('Error', error.message);
         }

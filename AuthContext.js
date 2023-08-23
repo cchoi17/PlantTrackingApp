@@ -39,8 +39,12 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const getUserEmail = () => {
+    return user ? user.email : null;
+  }
+
   return (
-    <AuthContext.Provider value={{ user, handleSignUp, handleSignIn, handleSignOut }}>
+    <AuthContext.Provider value={{ user, handleSignUp, handleSignIn, handleSignOut, getUserEmail}}>
       {children}
     </AuthContext.Provider>
   );
