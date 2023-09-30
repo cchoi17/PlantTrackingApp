@@ -4,7 +4,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 const HomeScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>iNaturalist</Text>
+            <Text style={styles.title}>Ascot App</Text>
             <Button title="Login" onPress={() => navigation.navigate('Login')} />
             <Button title="Signup" onPress={() => navigation.navigate('SignUp')} />
         </View>
