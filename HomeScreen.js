@@ -1,22 +1,27 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, ImageBackground } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Ascot App</Text>
-            <Button title="Login" onPress={() => navigation.navigate('Login')} />
-            <Button title="Signup" onPress={() => navigation.navigate('SignUp')} />
-        </View>
+        <ImageBackground source={require('./images/background.png')} style={styles.backgroundImage}>
+            <View style={styles.container}>
+                <Text style={styles.title}>Ascot App</Text>
+                <Button title="Login" onPress={() => navigation.navigate('Login')} />
+                <Button title="Signup" onPress={() => navigation.navigate('SignUp')} />
+            </View>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        resizeMode: "cover", // or 'stretch'
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#5dc762'
     },
     title: {
         fontSize: 24,
