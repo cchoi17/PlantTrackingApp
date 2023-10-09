@@ -19,6 +19,8 @@ const PlantDataForm = ({ navigation }) => {
   const [isDead, setIsDead] = useState(false);
   const [plantHealth, setPlantHealth] = useState("Fair");
   const [evidenceOf, setEvidenceOf] = useState([]);
+  const [userEmail, setUserEmail] = useState("Email not found");
+  const [scannedData, setScannedData] = useState("Waiting on scan...");
 
   const route = useRoute();
 
@@ -31,10 +33,14 @@ const PlantDataForm = ({ navigation }) => {
     "Drying Out",
   ];
 
-  useEffect(() => {
-    // Access the email parameter from the route params
-    const { email } = route.params || {};
-  }, [route]);
+    useEffect(() => {
+        const { scannedData = "Waiting on scan...", email = "" } = route.params ?? {};
+        setScannedData(scannedData || "Waiting on scan...");
+        setUserEmail(email || "email not found");
+    }
+    , [route]);
+
+
 
   const toggleEvidenceOption = (option) => {
     if (evidenceOf.includes(option)) {
@@ -46,13 +52,14 @@ const PlantDataForm = ({ navigation }) => {
 
   const addPlant = async () => {
     try {
+      setPlant(scannedData)
       const docRef = await addDoc(collection(FIRESTORE_DB, "plantsData"), {
-        plantID: plant,
+        plantID: scannedData,
         speciesID: species,
         dead: isDead,
         plantHealth: plantHealth,
         evidenceOf: evidenceOf,
-        email: route.params.email.toLowerCase(),
+        email: userEmail.toLowerCase(),
         timestamp: serverTimestamp(),
       });
       console.log("Added plant with ID: ", docRef.id);
@@ -61,6 +68,7 @@ const PlantDataForm = ({ navigation }) => {
       setIsDead(false);
       setEvidenceOf([]);
       setPlantHealth("Fair"); // Reset all the plant status variables
+      setScannedData("Waiting on scan...")
     } catch (error) {
       console.error("Error adding plant: ", error);
     }
@@ -68,14 +76,15 @@ const PlantDataForm = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.form}>
-        <Text style={styles.formTitles}>Plant ID</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter Plant ID, if QR code is unavailable"
-          onChangeText={(text) => setPlant(text)}
-          value={plant}
+      <View>
+        <Button
+          title="Go to QR Code Scanner"
+          onPress={() => navigation.navigate('QRCodeScanner', { email: userEmail})}
         />
+      </View>
+      <View style={styles.form}>
+        <Text style={styles.formTitles}>Plant ID:</Text>
+        <Text style={styles.formTitles}>{scannedData}</Text>
       </View>
       <View style={styles.form}>
         <Text style={styles.formTitles}>Species</Text>
@@ -111,24 +120,24 @@ const PlantDataForm = ({ navigation }) => {
           />
         </View>
       </View>
-<View style={styles.form}>
-  <Text style={styles.formTitles}>Evidence of:</Text>
-  <View style={styles.checkboxContainer}>
-    {evidenceOptions.map((option) => (
-      <View key={option} style={styles.checkboxRow}>
-        <View style={styles.textContainer}>
-          <Text>{option}</Text>
+      <View style={styles.form}>
+        <Text style={styles.formTitles}>Evidence of:</Text>
+        <View style={styles.checkboxContainer}>
+          {evidenceOptions.map((option) => (
+            <View key={option} style={styles.checkboxRow}>
+              <View style={styles.textContainer}>
+                <Text>{option}</Text>
+              </View>
+              <Checkbox
+                value={evidenceOf.includes(option)}
+                onValueChange={() => toggleEvidenceOption(option)}
+              />
+            </View>
+          ))}
         </View>
-        <Checkbox
-          value={evidenceOf.includes(option)}
-          onValueChange={() => toggleEvidenceOption(option)}
-        />
       </View>
-    ))}
-  </View>
-</View>
 
-      <Button onPress={addPlant} title="Add Plant" disabled={plant === ""} />
+      <Button onPress={addPlant} title="Add Plant" disabled={scannedData === "Waiting on scan..."} />
     </View>
   );
 };
@@ -141,20 +150,19 @@ const styles = StyleSheet.create({
   },
 
   checkboxContainer: {
-    flexDirection: 'column',
+    flexDirection: "column",
   },
 
   checkboxRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
-    paddingHorizontal: 16, 
+    paddingHorizontal: 16,
   },
 
   textContainer: {
-    paddingRight: 40, 
+    paddingRight: 40,
   },
-
 
   form: {
     flexDirection: "row",
