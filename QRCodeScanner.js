@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
-import { useNavigation,useRoute } from '@react-navigation/native';
-
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Text, Button } from "react-native";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const QRCodeScanner = () => {
   const [hasPermission, setHasPermission] = useState(false);
@@ -15,7 +14,7 @@ const QRCodeScanner = () => {
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, []);
 
@@ -23,9 +22,10 @@ const QRCodeScanner = () => {
     setScanData(data);
     console.log(`Scanned Data: ${data}`);
 
-    navigation.navigate('PlantDataForm', {
-    scannedData: data,
-    email: email});
+    navigation.navigate("PlantDataForm", {
+      scannedData: data,
+      email: email,
+    });
   };
 
   return (
@@ -48,9 +48,9 @@ const QRCodeScanner = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
