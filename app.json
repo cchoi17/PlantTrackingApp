@@ -1,8 +1,10 @@
 {
   "expo": {
-    "name": "Plant-Tracker",
-    "slug": "Plant-Tracker",
+    "name": "Plant Tracker",
+    "slug": "plant-Tracker",
+    "description": "Ascot Park app to track survivability.",
     "version": "1.0.0",
+    "icon": "./images/icon.png",
     "platforms": [
       "ios",
       "android",
@@ -11,7 +13,20 @@
     "ios": {
       "infoPlist": {
         "NSCameraUsageDescription": "We need access to your camera to scan QR codes for plant details."
+      },
+      "bundleIdentifier": "com.aaronflore.plantTracker"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "65afb694-9ff5-482d-a713-0ef1d63ccde9"
       }
-    }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/65afb694-9ff5-482d-a713-0ef1d63ccde9"
+    },
+    "android": {}
   }
 }

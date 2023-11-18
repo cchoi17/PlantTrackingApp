@@ -15,7 +15,7 @@ import Checkbox from "expo-checkbox";
 
 const PlantDataForm = ({ navigation }) => {
   const [plant, setPlant] = useState("");
-  const [species, setSpecies] = useState("");
+  const [species, setSpecies] = useState("Waiting on scan...");
   const [isDead, setIsDead] = useState(false);
   const [plantHealth, setPlantHealth] = useState("Fair");
   const [evidenceOf, setEvidenceOf] = useState([]);
@@ -33,10 +33,36 @@ const PlantDataForm = ({ navigation }) => {
     "Drying Out",
   ];
 
+ const mapScannedDataToSpecies = (scannedData) => {
+  const mappingRules = {
+    QUAG: "Coastal live oak",
+    QULO: "Valley live oak",
+    SANI: "Elderberry",
+    JUCA: "Southern California black walnut",
+    MALA: "Laurel sumac",
+    HEAR: "Toyon",
+    RHIN: "Lemonade berry",
+    FRCA: "Coffeeberry",
+    BAPI: "Coyote brush",
+    RHIL: "Hollyleaf redberry",
+    RIAU: "Golden currant",
+    RISP: "Fuchsiaflower gooseberry",
+  };
+
+  // Extract the prefix from the scannedData
+  const prefix = scannedData.substring(0, 4);
+
+  // Use the mappingRules to get the corresponding species
+  const species = mappingRules[prefix] || "Unknown species";
+
+  return species;
+};
+
     useEffect(() => {
         const { scannedData = "Waiting on scan...", email = "" } = route.params ?? {};
         setScannedData(scannedData || "Waiting on scan...");
         setUserEmail(email || "email not found");
+        setSpecies(mapScannedDataToSpecies(scannedData) || "Waiting on scan...");
     }
     , [route]);
 
@@ -53,6 +79,7 @@ const PlantDataForm = ({ navigation }) => {
   const addPlant = async () => {
     try {
       setPlant(scannedData)
+      setSpecies(mapScannedDataToSpecies(scannedData));
       const docRef = await addDoc(collection(FIRESTORE_DB, "plantsData"), {
         plantID: scannedData,
         speciesID: species,
@@ -88,12 +115,7 @@ const PlantDataForm = ({ navigation }) => {
       </View>
       <View style={styles.form}>
         <Text style={styles.formTitles}>Species</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter Species ID, if QR code is unavailable"
-          onChangeText={(text) => setSpecies(text)}
-          value={species}
-        />
+        <Text style={styles.formTitles}>{species}</Text>
       </View>
       <View style={styles.form}>
         <Text style={styles.formTitles}>Dead</Text>
@@ -131,6 +153,7 @@ const PlantDataForm = ({ navigation }) => {
               <Checkbox
                 value={evidenceOf.includes(option)}
                 onValueChange={() => toggleEvidenceOption(option)}
+                style={styles.checkbox}
               />
             </View>
           ))}
@@ -158,6 +181,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
     paddingHorizontal: 16,
+  },
+
+    checkbox: {
+    width: 30, 
+    height: 30, 
   },
 
   textContainer: {
