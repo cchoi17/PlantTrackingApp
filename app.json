@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Plant Tracker",
-    "slug": "plant-Tracker",
+    "slug": "ascot-mobile",
     "description": "Ascot Park app to track survivability.",
     "version": "1.0.0",
     "icon": "./images/icon.png",
@@ -18,7 +18,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "65afb694-9ff5-482d-a713-0ef1d63ccde9"
+        "projectId": "6f5c56ff-7a17-4e14-aa97-490542d33397"
       }
     },
     "runtimeVersion": {
@@ -27,6 +27,7 @@
     "updates": {
       "url": "https://u.expo.dev/65afb694-9ff5-482d-a713-0ef1d63ccde9"
     },
-    "android": {}
+    "android": {},
+    "owner": "ascot"
   }
 }
