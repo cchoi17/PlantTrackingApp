@@ -60,6 +60,7 @@ const PlantDataForm = ({ navigation }) => {
 };
 
   useEffect(() => {
+    navigation.setOptions({headerTitle: ' '});
     const { scannedData = "", email = "" } = route.params ?? {};
     if (scannedData) {
       setPlant(scannedData);
@@ -69,6 +70,7 @@ const PlantDataForm = ({ navigation }) => {
       setUserEmail(email);
     }
   }, [route.params]);
+
 
 
 
@@ -107,7 +109,7 @@ const PlantDataForm = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.header}>PlantDataForm</Text>
+      <Text style={styles.header}>Plant Data Form</Text>
       <View style={styles.buttonContainer}>
         <Button
           title="Go to QR Code Scanner"
@@ -226,6 +228,7 @@ const styles = StyleSheet.create({
   switchLabel: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginBottom: 20,
   },
   sliderContainer: {
     alignItems: 'stretch',
