@@ -19,6 +19,7 @@ const PlantDataForm = ({ navigation }) => {
   const [species, setSpecies] = useState("");
   const [isDead, setIsDead] = useState(false);
   const [plantHealth, setPlantHealth] = useState("Fair");
+  const [plantHeight, setPlantHeight] = useState(1);
   const [evidenceOf, setEvidenceOf] = useState([]);
   const [userEmail, setUserEmail] = useState("");
   const [scannedData, setScannedData] = useState("");
@@ -26,6 +27,8 @@ const PlantDataForm = ({ navigation }) => {
   const route = useRoute();
 
   const healthLabels = ["Poor", "Fair", "Good"];
+  const heightLabels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const cmHeights = [30, 61, 91, 122, 152, 183, 213, 244, 274, 305];
   const evidenceOptions = [
     "Predation",
     "Herbivory",
@@ -91,6 +94,7 @@ const PlantDataForm = ({ navigation }) => {
         speciesID: species,
         dead: isDead,
         plantHealth: plantHealth,
+        plantHeight: plantHeight,
         evidenceOf: evidenceOf,
         email: userEmail.toLowerCase(),
         timestamp: serverTimestamp(),
@@ -101,6 +105,7 @@ const PlantDataForm = ({ navigation }) => {
       setIsDead(false);
       setEvidenceOf([]);
       setPlantHealth("Fair"); // Reset all the plant status variables
+      setPlantHeight(1);
       setScannedData("")
     } catch (error) {
       console.error("", error);
@@ -156,6 +161,20 @@ const PlantDataForm = ({ navigation }) => {
           thumbTintColor="#34C759"
           value={healthLabels.indexOf(plantHealth)}
           onValueChange={(value) => setPlantHealth(healthLabels[value])}
+        />
+      </View>
+      <View style={styles.sliderContainer}>
+        <Text style={styles.switchLabel}>Plant Height: {plantHeight} ft ({cmHeights[plantHeight - 1]} cm)</Text>
+        <Slider
+          style={styles.slider}
+          minimumValue={0}
+          maximumValue={9}
+          step={1}
+          minimumTrackTintColor="#34C759"
+          maximumTrackTintColor="#C7C7CC"
+          thumbTintColor="#34C759"
+          value={heightLabels.indexOf(plantHeight)}
+          onValueChange={(value) => setPlantHeight(heightLabels[value])}
         />
       </View>
       <View>
