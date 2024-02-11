@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@expo/webpack-config": "^19.0.0",
     "@react-native-community/slider": "4.4.2",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",

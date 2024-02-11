@@ -8,14 +8,21 @@ import { FIREBASE_AUTH } from './firebaseConfig';
 const SignUpScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [projectCode, setProjectCode] = useState('')
     const navigation = useNavigation(); 
 
     const handleSignUp = async () => {
-        try {
-            await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
-            navigation.navigate('HomeScreen');
-        } catch (error) {
-            Alert.alert('Error', error.message);
+        const access = "266152"
+        if (projectCode == access) {
+            try {
+                await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
+                navigation.navigate('HomeScreen');
+            } catch (error) {
+                Alert.alert('Error', error.message);
+            }
+        }
+        else {
+            Alert.alert('Error', "The Project Code entered is not valid.")
         }
     }
 
@@ -42,6 +49,12 @@ const SignUpScreen = () => {
                     onChangeText={setPassword}
                     onSubmitEditing = {handleSignUp}
                     returnKeyType = 'done'
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Project Code"
+                    value={projectCode}
+                    onChangeText={setProjectCode}
                 />
                 <Button title="Sign Up" onPress={handleSignUp} />
             </View>
