@@ -21,9 +21,6 @@ const SignUpScreen = () => {
                 Alert.alert('Error', error.message);
             }
         }
-        else {
-            Alert.alert('Error', "The Project Code entered is not valid.")
-        }
     }
 
     return (
