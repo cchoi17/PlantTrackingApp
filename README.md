@@ -1,4 +1,25 @@
-# My Universal React Project
+## Prerequisites
+
+- Yarn: https://classic.yarnpkg.com/lang/en/docs/install/
+
+## Quickstart
+
+Clone the repo, then run:
+
+```
+yarn
+npx expo start
+```
+
+Then, press `i` to run the app in the iOS Simulator.
+
+## Helpful Tips and Troubleshooting
+
+- How to run iOS Simulator from terminal: https://stackoverflow.com/a/35262865
+- UNable to verify Xcode and Simulator installation: https://github.com/expo/create-react-native-app/issues/74
+
+## My Universal React Project
+
 <p>
   <!-- iOS -->
   <a href="https://itunes.apple.com/app/apple-store/id982107779">
