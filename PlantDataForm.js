@@ -90,7 +90,7 @@ const PlantDataForm = ({ navigation }) => {
       setPlant(scannedData)
       setSpecies(mapScannedDataToSpecies(scannedData));
       const docRef = await addDoc(collection(FIRESTORE_DB, "plantsData"), {
-        plantID: scannedData,
+        plantID: plant,
         speciesID: species,
         dead: isDead,
         plantHealth: plantHealth,
